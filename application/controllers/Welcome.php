@@ -47,9 +47,9 @@ class Welcome extends Application
         $this->data['display_tasks'] = $display_tasks;
         $this->data['remaining_tasks'] = $count;
 
-		$this->data['pagebody'] = 'homepage';
+		    $this->data['pagebody'] = 'homepage';
         $this->data['pagetitle'] = 'ToDoList Manager';
-		$this->render();
+		    $this->render();
 
 	}
 
