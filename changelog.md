@@ -14,3 +14,10 @@ Release Date: Feb 14, 2017
 ## Updated Components
  - make the data  folder writeable - RT
  - added a new model into autoload.php - RT
+ 
+ ## Updated Homepage Features
+  - A.Base controller tweaking - KK
+  - B.Our homepage - beginnings - KK
+  - C.Our homepage - details - KK
+  
+ 
