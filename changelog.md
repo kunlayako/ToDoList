@@ -1,6 +1,6 @@
 #Change Log
 
-Team membership:  Sheldon Lynn (Captain), Ron Tran (Mate)   
+Team membership:  Sheldon Lynn (Captain), Ron Tran (Mate), Kunlaya Kobunnoi (Mate)  
 Team conventions: Allman notation, markdown for changelog  
 Changelog Format: Read from newest to oldest
 
