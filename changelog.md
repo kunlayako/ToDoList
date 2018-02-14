@@ -9,6 +9,8 @@ Changelog Format: Read from newest to oldest
 Release Date: Feb 14, 2017
 
 ## New Components
+ - Added Views.php to controllers folder - SL
+ - Added template_secondary.php to views folder - SL
  - Added Tasks.php to model folder - RT
 
 ## Updated Components
