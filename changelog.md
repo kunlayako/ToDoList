@@ -25,3 +25,8 @@ Release Date: Feb 14, 2017
   - B.Our homepage - beginnings - KK
   - C.Our homepage - details - KK
  
+ ## Job 5 - Help Wanted Page Features
+   - A. Add a markdown processor- KK
+   - B. Write a help wanted ad - KK
+   - C. Add a controller - KK
+   - D. Process the markdown - KK
