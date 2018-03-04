@@ -11,32 +11,24 @@ class Views extends Application
         $tasks = $this->tasks->all();   // get all the tasks
         $this->data['content'] = 'Ok'; // so we don't need pagebody
         $this->data['leftside'] = $this->makePrioritizedPanel($tasks);
-        $this->data['rightside'] = $this->makeCategorizedPanel($tasks);
+        $this->data['rightside'] = $this->makeCategorizedPanel();
 
         $this->render('template_secondary');
     }
 
-    function render($template = 'template')
+    function makePrioritizedPanel($tasks)
     {
-        $this->data['menubar'] = $this->parser->parse('_menubar', $this->config->item('menu_choices'),true);
-        // use layout content if provided
-        if (!isset($this->data['content']))
-            $this->data['content'] = $this->parser->parse($this->data['pagebody'], $this->data, true);
-        $this->parser->parse($template, $this->data);
-    }
-
-    function makePrioritizedPanel($tasks) {
         // extract the undone tasks
         foreach ($tasks as $task)
         {
             if ($task->status != 2)
+            {
                 $undone[] = $task;
+            }
         }
 
-        // order them by priority
-        usort($undone, "orderByPriority");
-
         // substitute the priority name
+        usort($undone, "Views::orderByPriority");
         foreach ($undone as $task)
             $task->priority = $this->app->priority($task->priority);
 
@@ -44,25 +36,50 @@ class Views extends Application
         foreach ($undone as $task)
             $converted[] = (array) $task;
 
+        // and then pass them on
         $parms = ['display_tasks' => $converted];
-        return $this->parser->parse('by_priority',$parms,true);
+
+        // INSERT the next two lines
+        $role = $this->session->userdata('userrole');
+        $parms['completer'] = ($role == ROLE_OWNER) ? '/views/complete' : '#';
+        return $this->parser->parse('by_priority', $parms, true);
+
+        return $this->parser->parse('by_priority', $parms, true);
     }
 
-    function makeCategorizedPanel($tasks)
+    function makeCategorizedPanel()
     {
         $parms = ['display_tasks' => $this->tasks->getCategorizedTasks()];
         return $this->parser->parse('by_category', $parms, true);
     }
 
-}
+    // return -1, 0, or 1 of $a's priority is higher, equal to, or lower than $b's
+    function orderByPriority($a, $b)
+    {
+        if ($a->priority > $b->priority)
+            return -1;
+        elseif ($a->priority < $b->priority)
+            return 1;
+        else
+            return 0;
+    }
 
-// return -1, 0, or 1 of $a's priority is higher, equal to, or lower than $b's
-function orderByPriority($a, $b)
-{
-    if ($a->priority > $b->priority)
-        return -1;
-    elseif ($a->priority < $b->priority)
-        return 1;
-    else
-        return 0;
+    // complete flagged items
+    function complete() {
+        
+        $role = $this->session->userdata('userrole');
+        if ($role != ROLE_OWNER) redirect('/views');
+
+        // loop over the post fields, looking for flagged tasks
+        foreach($this->input->post() as $key=>$value) {
+            if (substr($key,0,4) == 'task') {
+                // find the associated task
+                $taskid = substr($key,4);
+                $task = $this->tasks->get($taskid);
+                $task->status = 2; // complete
+                $this->tasks->update($task);
+            }
+        }
+        $this->index();
+    }
 }
