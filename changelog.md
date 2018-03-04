@@ -37,3 +37,11 @@ Release Date: Feb 14, 2017
    - C. Added method page to Mtce controller - RT 
    - D. Added {pagination} to itemlist view - RT
    - E. Added method pagenav to Mtce controller - RT
+   
+## Job 10 - Task Item Maintainence
+   - A. Added itemedit to views folder - RT
+   - B. Added method add to MTCE - RT
+   - C. Added method edit to Mtce controller - RT 
+   - D. Added method showit to Mtce controller - RT 
+   - E. Added method delete to Mtce controller - RT
+   - F. Added method cancel to Mtce controller - RT 
