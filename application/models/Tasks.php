@@ -1,5 +1,6 @@
 <?php
-class Tasks extends CSV_Model {
+class Tasks extends CSV_Model
+{
 
     public function __construct()
     {
@@ -9,8 +10,7 @@ class Tasks extends CSV_Model {
     function getCategorizedTasks()
     {
         // extract the undone tasks
-        foreach ($this->all() as $task)
-        {
+        foreach ($this->all() as $task) {
             if ($task->status != 2)
                 $undone[] = $task;
         }
@@ -24,10 +24,24 @@ class Tasks extends CSV_Model {
 
         // convert the array of task objects into an array of associative objects
         foreach ($undone as $task)
-            $converted[] = (array) $task;
+            $converted[] = (array)$task;
 
         return $converted;
     }
+
+    // provide form validation rules
+    public function rules()
+    {
+        $config = array(
+            ['field' => 'task', 'label' => 'TODO task', 'rules' => 'alpha_numeric_spaces|max_length[64]'],
+            ['field' => 'priority', 'label' => 'Priority', 'rules' => 'integer|less_than[4]'],
+            ['field' => 'size', 'label' => 'Task size', 'rules' => 'integer|less_than[4]'],
+            ['field' => 'group', 'label' => 'Task group', 'rules' => 'integer|less_than[5]'],
+        );
+        return $config;
+    }
+
+
 }
 
 // return -1, 0, or 1 of $a's category name is earlier, equal to, or later than $b's
