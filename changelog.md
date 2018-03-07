@@ -45,3 +45,11 @@ Release Date: Feb 14, 2017
    - D. Added method showit to Mtce controller - RT 
    - E. Added method delete to Mtce controller - RT
    - F. Added method cancel to Mtce controller - RT 
+
+## Testing prep 
+- A. Added tests folder to root - RT
+- B. Added subfoler application and models insides tests - RT
+- C. Added Task.php to models - RT 
+- D. Added TaskList to models - RT
+- E. Added TaskTest to tests/application/model - RT
+- F. Added Bootstrap.php to tests - RT
