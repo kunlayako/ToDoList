@@ -1,40 +1,72 @@
 <?php
 
 class Task extends Entity {
-    private $dateofbirth;
-    private $age;
-    private $name;
+    private $priority;
+    private $size;
+    private $group;
+    private $task;
 
-    public function setName($value) {
+    public function setTask($value) {
+
+        if (!ctype_alnum(trim(str_replace(' ','',$value)))) {
+            throw new Exception('does not consist of alpha, numeric and spaces');
+        }
+
         if (empty($value)) {
-            throw new Exception("Name can't be empty");
+            throw new Exception("Task Name can't be empty");
         }
-        if (strlen(value) > 30) {
-            throw new Exception('A Name cannot be longer than 30 characters');
+        if (strlen($value) > 30) {
+            throw new Exception('A Task Name cannot be longer than 30 characters');
         }
+
+        $this->task = $value;
     }
 
-    public function setDateofbirth($value) {
-        if (empty($value)) {
-            throw new Exception("Dateofbirth can't be empty");
+    public function setPriority($value) {
+        if (!is_int($value)) {
+            throw new Exception("Priority has to be an integer");
         }
-    }
-
-    public function setAge($value) {
-        if (empty($value)) {
-            throw new Exception("Age can't be empty");
+        if ($value < 1 || $value > 4) {
+            throw new Exception('Must be between 1 to 4');
         }
+
+        $this->priority = $value;
     }
 
-    public function getDateofbirth() {
-        return $this->dateofbirth;
+    public function setSize($value) {
+        if (!is_int($value)) {
+            throw new Exception('Size must be an integer');
+        }
+        if ($value < 1 || $value > 4) {
+            throw new Exception('Must be between 1 to 4');
+        }
+
+        $this->size = $value;
     }
 
-    public function getAge() {
-        return $this->age;
+    public function setGroup($value) {
+        if (!is_int($value)) {
+            throw new Exception('Group must be an integer');
+        }
+        if ($value < 1 || $value > 5) {
+            throw new Exception('Must be between 1 to 5');
+        }
+        $this->group = $value;
     }
 
-    public function getName(){
-        return $this->name;
+    public function getTask() {
+        return $this->task;
+    }
+
+    public function getPriority() {
+        return $this->priority;
+    }
+
+    public function getSize(){
+        return $this->size;
+    }
+
+    public function getGroup() {
+        return $this->group;
     }
 }
