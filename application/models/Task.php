@@ -1,11 +1,12 @@
 <?php
 
 class Task extends Entity {
-    public $id;
-    public $priority;
-    public $task;
-    public $size;
-    public $group;
+
+    private $id;
+    private $priority;
+    private $size;
+    private $group;
+    private $task;
 
     public function setId($value) {
         if (empty($value))
@@ -13,36 +14,71 @@ class Task extends Entity {
         $this->id = $value;
     }
 
-    public function setPriority($value) {
-        if (! is_numeric($value))
-            throw new Exception('Must contain priority');
-        if ($value > 4)
-            throw new Exception('Priority must be < 4');
-        $this->priority = $value;
+    public function setTask($value) {
+
+        if (!ctype_alnum(trim(str_replace(' ','',$value)))) {
+            throw new Exception('does not consist of alpha, numeric and spaces');
+        }
+
+        if (empty($value)) {
+            throw new Exception("Task Name can't be empty");
+        }
+        if (strlen($value) > 30) {
+            throw new Exception('A Task Name cannot be longer than 30 characters');
+        }
+
+        $this->task = $value;
     }
 
-    public function setTask($value) {
-        if (strlen($value) > 64) {
-            throw new Exception('Task cannot be longer than 64 chars');
+    public function setPriority($value) {
+        if (!is_int($value)) {
+            throw new Exception("Priority has to be an integer");
         }
-        if (!ctype_alnum(trim(str_replace(' ','',$value))))
-            throw new Exception('Task is invalid');
+        if ($value < 1 || $value > 4) {
+            throw new Exception('Must be between 1 to 4');
+        }
+
         $this->priority = $value;
     }
 
     public function setSize($value) {
-        if (!is_numeric($value))
-            throw new Exception('Size cannot be empty');
-        if ($value > 4)
-            throw new Exception('Please choose proper size');
+        if (!is_int($value)) {
+            throw new Exception('Size must be an integer');
+        }
+        if ($value < 1 || $value > 4) {
+            throw new Exception('Must be between 1 to 4');
+        }
+
         $this->size = $value;
     }
 
     public function setGroup($value) {
-        if (!is_numeric($value))
-            throw new Exception('Group cannot be empty');
-        if ($value > 4)
-            throw new Exception('Please choose a proper group');
+        if (!is_int($value)) {
+            throw new Exception('Group must be an integer');
+        }
+        if ($value < 1 || $value > 5) {
+            throw new Exception('Must be between 1 to 5');
+        }
         $this->group = $value;
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getTask() {
+        return $this->task;
+    }
+
+    public function getPriority() {
+        return $this->priority;
+    }
+
+    public function getSize(){
+        return $this->size;
+    }
+
+    public function getGroup() {
+        return $this->group;
     }
 }
