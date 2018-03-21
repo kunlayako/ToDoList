@@ -53,3 +53,7 @@ Release Date: Feb 14, 2017
 - D. Added TaskList to models - RT
 - E. Added TaskTest to tests/application/model - RT
 - F. Added Bootstrap.php to tests - RT
+
+
+## Convert CSV to XML
+- added data/tasks.xml
